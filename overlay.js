@@ -4,13 +4,14 @@
 //Written by Tyler Nichol - 9/18
 //LIBRARY CLASS
 
-function overlay(params){
+var overlay = (function(){
 
 
     function resizeOverlay(params){
 
     //get the overlay container
     var layContainer = document.getElementsByClassName(params.element)[0];
+    console.log(layContainer);
     
     //user sets height and width of bg image used so we can calculate ratio
     var bgHeight = params.height;
@@ -85,10 +86,13 @@ function overlay(params){
 
    }
 
-   resizeOverlay(params);
+   
 
-   window.onresize = function(){
-       resizeOverlay(params);
-   }
+   return function(params) {
+    resizeOverlay(params);
+    window.addEventListener("resize", function() {
+      resizeOverlay(params);
+    });
+  }
 
-}
+})();
